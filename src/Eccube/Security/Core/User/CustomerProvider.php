@@ -56,6 +56,12 @@ class CustomerProvider implements UserProviderInterface
             throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
         }
 
+        if (extension_loaded('newrelic')) { // Ensure PHP agent is available
+            // Record custom data about this web transaction
+            newrelic_add_custom_parameter ('user_email', $username);
+        }
+
+
         return $Customer;
     }
 

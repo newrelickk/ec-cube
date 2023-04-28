@@ -131,7 +131,7 @@ services:
     eccube.log.formatter.line:
         class: Monolog\Formatter\LineFormatter
         arguments:
-            - "[%%datetime%%] %%channel%%.%%level_name%% [%%extra.session_id%%] [%%extra.uid%%] [%%extra.user_id%%] [%%extra.class%%:%%extra.function%%:%%extra.line%%] - %%message%% %%context%% [%%extra.http_method%%, %%extra.url%%, %%extra.ip%%, %%extra.referrer%%, %%extra.user_agent%%]\n"
+            - "[%%datetime%%] %%channel%%.%%level_name%% [%%extra.session_id%%] [%%extra.uid%%] [%%extra.user_id%%] [%%extra.class%%:%%extra.function%%:%%extra.line%%] - %%message%% %%context%% [%%extra.http_method%%, %%extra.url%%, %%extra.ip%%, %%extra.referrer%%, %%extra.user_agent%%] NR-LINKING|%%extra.entityGuid%%|%%extra.hostname%%|%%extra.traceId%%|%%extra.spanId%%|%%extra.entityName%%|\n"
 
     Eccube\Log\Processor\SessionProcessor:
         tags:
@@ -142,6 +142,10 @@ services:
             - { name: monolog.processor }
 
     Monolog\Processor\UidProcessor:
+        tags:
+            - { name: monolog.processor }
+
+    Eccube\Log\Processor\NewRelicProcessor:
         tags:
             - { name: monolog.processor }
 

@@ -248,6 +248,10 @@ class ProductController extends AbstractController
 
         $Category = $searchForm->get('category_id')->getData();
 
+        if ($Product->getId() == '2') {
+                throw new HttpException('Product error', 500);
+        }
+
         return [
             'subtitle' => $this->getPageTitle($searchData),
             'pagination' => $pagination,
