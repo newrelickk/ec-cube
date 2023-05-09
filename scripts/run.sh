@@ -1,6 +1,6 @@
 #!/bin/bash
 . ~/.bashrc
-cd ~/ec-cube/ec-cube
+cd ~/ec-cube
 php bin/console server:run --env=dev -q -- 0.0.0.0:8000 &
 echo "サンプルサービスが起動しました。 http://$HOSTNAME.$_SANDBOX_ID.instruqt.io:8000 にアクセスしてみましょう。"
 export PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
