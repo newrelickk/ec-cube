@@ -3,14 +3,19 @@
 
 const puppeteer = require('puppeteer');
 const users = require('./users.json');
+const URL = 'http://eccube-server.huax8hif1um2.instruqt.io:8000';
+
 (async() => {
 const browser = await puppeteer.launch({
-    headless: 'new',
+    headless: false,
     args: ['--lang=ja', '--no-sandbox', '--disabled-setuid-sandbox']  // デフォルトでは言語設定が英語なので日本語に変更
   });
   const page = await browser.newPage();
-
-
+  let haveError = false;
+  page.on('dialog', async dialog => {
+    haveError = true;
+    dialog.accept(); // OK
+  });
   const wait = async (time) => {
     return new Promise((res) => {
       setTimeout(() => {
@@ -24,7 +29,7 @@ const browser = await puppeteer.launch({
     }, selector);
   };
   const test = async (user) => {
-    await page.goto('http://localhost:8000');
+    await page.goto(URL);
     await page.waitForSelector('.ec-headerNav__item:nth-child(3) a');
     await page.click('.ec-headerNav__item:nth-child(3) a');
     await page.waitForSelector('#login_email');
@@ -46,6 +51,10 @@ const browser = await puppeteer.launch({
     await page.waitForSelector('.ec-layoutRole__main .ec-blockBtn--action')
     await page.click('.ec-layoutRole__main .ec-blockBtn--action')
     await wait(500);
+    if (haveError) {
+      haveError = false;
+      return;
+    }
     await page.waitForSelector('.ec-inlineBtn--action', {visible: true})
     await wait(500);
     await page.click('.ec-inlineBtn--action')
@@ -59,7 +68,7 @@ const browser = await puppeteer.launch({
     await page.waitForSelector('.ec-layoutRole__main .ec-blockBtn--action')
     await page.click('.ec-layoutRole__main .ec-blockBtn--action')
     await wait(500);
-    await page.goto('http://localhost:8000');
+    await page.goto(URL);
     await page.waitForSelector('.ec-newItemRole__listItem:nth-child(3) a');
     await page.click('.ec-newItemRole__listItem:nth-child(3) a');
     await wait(500);
