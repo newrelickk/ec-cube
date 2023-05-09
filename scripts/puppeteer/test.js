@@ -6,7 +6,7 @@ const users = require('./users.json');
 (async() => {
 const browser = await puppeteer.launch({
     headless: 'new',
-    args: [`--window-size=1200,800`, '--lang=ja'] // デフォルトでは言語設定が英語なので日本語に変更
+    args: ['--lang=ja', '--no-sandbox', '--disabled-setuid-sandbox']  // デフォルトでは言語設定が英語なので日本語に変更
   });
   const page = await browser.newPage();
 
