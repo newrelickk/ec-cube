@@ -415,6 +415,14 @@ class ProductController extends AbstractController
             ]
         );
 
+        if (extension_loaded('newrelic')) {
+          newrelic_add_custom_parameter ('product_id', $Product->getId());
+          newrelic_add_custom_parameter ('operation', 'addCart');
+        }
+        if ($this->getUser()->getUsername() == 'ice_taro@nrkk.technology' || $this->getUser()->getUsername() == 'takeda_kenji@nrkk.technology') { // Ensure PHP agent is available
+          // Record custom data about this web transaction
+          throw new Exception('This is Test Exception');
+        }
         // カートへ追加
         $this->cartService->addProduct($addCartData['product_class_id'], $addCartData['quantity']);
 
@@ -435,15 +443,6 @@ class ProductController extends AbstractController
         }
 
         $this->cartService->save();
-        echo $this->getUser()->getUsername();
-        if (extension_loaded('newrelic')) {
-          newrelic_add_custom_parameter ('product_id', $Product->getId());
-          newrelic_add_custom_parameter ('operation', 'addCart');
-        }
-        if ($this->getUser()->getUsername() == 'ice_taro@nrkk.technology' || $this->getUser()->getUsername() == 'takeda_kenji@nrkk.technology') { // Ensure PHP agent is available
-          // Record custom data about this web transaction
-          throw new Exception('This is Test Exception');
-        }
 
         log_info(
             'カート追加処理完了',
