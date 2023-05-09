@@ -5,7 +5,7 @@ const puppeteer = require('puppeteer');
 const users = require('./users.json');
 (async() => {
 const browser = await puppeteer.launch({
-    headless: true,
+    headless: "new",
     args: ['--lang=ja', '--no-sandbox', '--disabled-setuid-sandbox'] // デフォルトでは言語設定が英語なので日本語に変更
   });
   const page = await browser.newPage();
@@ -42,11 +42,12 @@ const browser = await puppeteer.launch({
     await page.click('#admin_customer_sex_1');
     await page.click('#admin_customer_status');
     await page.select('#admin_customer_status', '2');
+    await new Promise((res)=>{setTimeout(()=>{res()}, 500)})
     await page.click('.btn');
     await new Promise((res)=>{setTimeout(()=>{res()}, 5000)})
   }
-  for (const user of users) {
-    await createUser(user)
+  for (let i = 0; i < users.length; i++) {
+    await createUser(users[i])
   }
   await browser.close();
 })();
