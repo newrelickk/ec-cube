@@ -419,9 +419,9 @@ class ProductController extends AbstractController
           newrelic_add_custom_parameter ('product_id', $Product->getId());
           newrelic_add_custom_parameter ('operation', 'addCart');
         }
-        if ($this->getUser()->getUsername() == 'ice_taro@nrkk.technology' || $this->getUser()->getUsername() == 'takeda_kenji@nrkk.technology') { // Ensure PHP agent is available
+        if (!is_null($this->getUser()) && ($this->getUser()->getUsername() == 'ice_taro@nrkk.technology' || $this->getUser()->getUsername() == 'takeda_kenji@nrkk.technology')) { // Ensure PHP agent is available
           // Record custom data about this web transaction
-          throw new Exception('This is Test Exception');
+          throw new \Exception('This is Test Exception');
         }
         // カートへ追加
         $this->cartService->addProduct($addCartData['product_class_id'], $addCartData['quantity']);
