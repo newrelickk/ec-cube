@@ -3,15 +3,16 @@
 
 const puppeteer = require('puppeteer');
 const users = require('./users.json');
-const URL = 'http://eccube-server.huax8hif1um2.instruqt.io:8000';
+const HOST = process.env.HOST || 'localhost'
+const URL = `http://${HOST}:8000`;
 
 (async() => {
 const browser = await puppeteer.launch({
-    headless: false,
+    headless: 'new',
     args: ['--lang=ja', '--no-sandbox', '--disabled-setuid-sandbox']  // デフォルトでは言語設定が英語なので日本語に変更
   });
   const page = await browser.newPage();
-  let haveError = false;
+  let haveError = 'new';
   page.on('dialog', async dialog => {
     haveError = true;
     dialog.accept(); // OK
