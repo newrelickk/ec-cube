@@ -19,11 +19,11 @@ class NewRelicProcessor implements ProcessorInterface
             $linking_data = newrelic_get_linking_metadata();
             // NR-LINKING|{entity.guid}|{hostname}|{trace.id}|{span.id}|{entity.name}|
             $record['extra']['newrelic-context'] = [];
-            $record['extra']['entityGuid'] = $linking_data['entity.guid'];
-            $record['extra']['hostname'] = $linking_data['hostname'];
-            $record['extra']['traceId'] = $linking_data['trace.id'];
-            $record['extra']['spanId'] = $linking_data['span.id'];
-            $record['extra']['entityName'] = $linking_data['entity.name'];
+            $record['extra']['entityGuid'] = isset($linking_data['entity.guid']) ? $linking_data['entity.guid'] : '';
+            $record['extra']['hostname'] = isset($linking_data['hostname']) ? $linking_data['hostname'] : '';
+            $record['extra']['traceId'] = isset($linking_data['trace.id']) ? $linking_data['trace.id'] : '';
+            $record['extra']['spanId'] = isset($linking_data['span.id']) ? $linking_data['span.id'] : '';
+            $record['extra']['entityName'] = isset($linking_data['entity.name']) ? $linking_data['entity.name'] : '';
         }
         return $record;
     }
