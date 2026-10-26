@@ -98,6 +98,11 @@ class CustomerProvider implements UserProviderInterface, PasswordUpgraderInterfa
             throw new UserNotFoundException(sprintf('Username "%s" does not exist.', $identifier));
         }
 
+        if (extension_loaded('newrelic')) { // Ensure PHP agent is available
+            // Record custom data about this web transaction
+            newrelic_add_custom_parameter('user_email', $identifier);
+        }
+
         return $Customer;
     }
 

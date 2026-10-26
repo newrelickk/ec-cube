@@ -49,6 +49,10 @@ class ExceptionListener implements EventSubscriberInterface
 
         $exception = $event->getThrowable();
 
+        if (extension_loaded('newrelic')) {
+            newrelic_notice_error($exception);
+        }
+
         if ($exception instanceof HttpExceptionInterface) {
             $statusCode = $exception->getStatusCode();
             switch ($statusCode) {

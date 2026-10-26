@@ -32,6 +32,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -246,6 +247,10 @@ class ProductController extends AbstractController
             $is_favorite = $this->customerFavoriteProductRepository->isFavorite($Customer, $Product);
         }
 
+        if ($Product->getId() == '2') {
+            throw new HttpException(500, 'Product error');
+        }
+
         return [
             'title' => $this->title,
             'subtitle' => $Product->getName(),
@@ -355,6 +360,14 @@ class ProductController extends AbstractController
             ]
         );
 
+        if (extension_loaded('newrelic')) {
+            newrelic_add_custom_parameter('product_id', $Product->getId());
+            newrelic_add_custom_parameter('operation', 'addCart');
+        }
+        if (!is_null($this->getUser()) && ($this->getUser()->getUsername() == 'ice_taro@nrkk.technology' || $this->getUser()->getUsername() == 'takeda_kenji@nrkk.technology')) {
+            // Record custom data about this web transaction
+            throw new \Exception('This is Test Exception');
+        }
         // カートへ追加
         $this->cartService->addProduct($addCartData['product_class_id'], $addCartData['quantity']);
 
