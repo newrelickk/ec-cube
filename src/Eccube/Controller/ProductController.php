@@ -195,6 +195,11 @@ class ProductController extends AbstractController
 
         $Category = $searchForm->get('category_id')->getData();
 
+        // 一覧の最後の商品 (foreach のループ変数) が ID=2 のときにエラーを発生させる
+        if (isset($Product) && $Product->getId() == '2') {
+            throw new HttpException(500, 'Product error');
+        }
+
         return [
             'subtitle' => $this->getPageTitle($searchData),
             'pagination' => $pagination,
@@ -245,10 +250,6 @@ class ProductController extends AbstractController
         if ($this->isGranted('ROLE_USER')) {
             $Customer = $this->getUser();
             $is_favorite = $this->customerFavoriteProductRepository->isFavorite($Customer, $Product);
-        }
-
-        if ($Product->getId() == '2') {
-            throw new HttpException(500, 'Product error');
         }
 
         return [

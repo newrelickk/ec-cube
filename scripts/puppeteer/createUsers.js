@@ -37,13 +37,13 @@ const browser = await puppeteer.launch({
     await page.type('#admin_customer_address_addr02', 'test');
     await page.type('#admin_customer_email', user.email);
     await page.type('#admin_customer_phone_number', '1234567890');
-    await page.type('#admin_customer_password_first', 'password');
-    await page.type('#admin_customer_password_second', 'password');
+    await page.type('#admin_customer_plain_password_first', 'password');
+    await page.type('#admin_customer_plain_password_second', 'password');
     await page.click('#admin_customer_sex_1');
     await page.click('#admin_customer_status');
     await page.select('#admin_customer_status', '2');
     await new Promise((res)=>{setTimeout(()=>{res()}, 500)})
-    await page.click('.btn');
+    await page.click('.btn-ec-conversion');
     await new Promise((res)=>{setTimeout(()=>{res()}, 5000)})
   }
   for (let i = 0; i < users.length; i++) {
