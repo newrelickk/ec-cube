@@ -2,7 +2,8 @@
 . ~/.bashrc
 ~/restart.sh
 export PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-nvm install 20 && nvm use 16
+export NVM_DIR="$HOME/.nvm"; . "$NVM_DIR/nvm.sh"
+nvm install 20 && nvm use 20
 cd ~/ec-cube/scripts/puppeteer
 echo "自動テスト環境準備中"
 npm i --silent
