@@ -34,6 +34,8 @@ const browser = await puppeteer.launch({
     await page.type('#admin_customer_kana_kana02', user.kana.split(' ')[1]);
     await page.type('#admin_customer_postal_code', '134-0081');
     await new Promise((res)=>{setTimeout(()=>{res()}, 1000)})
+    await page.select('#admin_customer_address_pref', '13');
+    await page.type('#admin_customer_address_addr01', '江戸川区北葛西');
     await page.type('#admin_customer_address_addr02', 'test');
     await page.type('#admin_customer_email', user.email);
     await page.type('#admin_customer_phone_number', '1234567890');
