@@ -12,4 +12,5 @@ echo "テストユーザーを作成します。"
 node createUsers.js
 echo "テストユーザーを作成しました。"
 echo "自動テストを開始します。"
-node test.js &
+# 何らかの理由で test.js が終了しても自動で再起動する
+(while true; do node test.js; sleep 5; done) &

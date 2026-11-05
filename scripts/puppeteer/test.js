@@ -91,9 +91,14 @@ const browser = await puppeteer.launch({
     } catch (e) {
       // Do nothing
     } finally {
-      await wait(500);
-      await page.waitForSelector('.ec-headerNav__item:nth-child(3) a');
-      await page.click('.ec-headerNav__item:nth-child(3) a');
+      // ログアウト。サーバ再起動やエラーページ等でヘッダーが取れなくても、負荷生成全体は止めずに次の周回へ進む
+      try {
+        await wait(500);
+        await page.waitForSelector('.ec-headerNav__item:nth-child(3) a');
+        await page.click('.ec-headerNav__item:nth-child(3) a');
+      } catch (e) {
+        await wait(3000);
+      }
     }
   }
   await browser.close();
