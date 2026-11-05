@@ -1,7 +1,8 @@
 name: Deploy for EC-CUBE
+# 手動実行のみ (このフォークでは push 等で自動実行しない)
 on:
-  release:
-    types: [ published ]
+  workflow_dispatch:
+
 jobs:
   deploy:
     name: Deploy

@@ -1,11 +1,8 @@
 name: Testing dockerbuild
+# 手動実行のみ (このフォークでは push 等で自動実行しない)
 on:
-  push:
-    paths:
-      - '**'
-      - '!*.md'
-  release:
-    types: [ published ]
+  workflow_dispatch:
+
 env:
   REGISTRY: ghcr.io
 

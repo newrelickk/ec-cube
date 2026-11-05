@@ -1,7 +1,7 @@
 name: Penetration testing for EC-CUBE
+# 手動実行のみ (このフォークでは push 等で自動実行しない)
 on:
-  schedule:
-    - cron: '0 15 * * 1'
+  workflow_dispatch:
 
 jobs:
   PenetrationTest:

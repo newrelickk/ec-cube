@@ -1,17 +1,7 @@
 name: PHPStan
+# 手動実行のみ (このフォークでは push 等で自動実行しない)
 on:
-  push:
-    branches:
-      - '*'
-    tags:
-      - '*'
-    paths:
-      - '**'
-      - '!*.md'
-  pull_request:
-    paths:
-      - '**'
-      - '!*.md'
+  workflow_dispatch:
 
 jobs:
   phpstan:

@@ -1,5 +1,8 @@
 name: VAddy-test
-on: push
+# 手動実行のみ (このフォークでは push 等で自動実行しない)
+on:
+  workflow_dispatch:
+
 jobs:
   vaddy:
     name: VAddy
